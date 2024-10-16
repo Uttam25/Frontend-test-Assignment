@@ -39,7 +39,7 @@
     "commit": "commit"
   },
   "engines": {
-    "node": "!^x",
+   "node": "20.x",
     "npm": "!^x",
     "yarn": "!^x",
     "pnpm": "!^x",
