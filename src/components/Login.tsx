@@ -20,13 +20,15 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const navigate = useNavigate();  // Initialize useNavigate hook
+  const navigate = useNavigate(); 
 
   return (
-    <div className="flex w-[100vw] justify-center items-center">
+    <div className="flex w-[100vw] h-[100vh] justify-center items-center">
       <div className="flex flex-col justify-center">
-        <h2 className="my-6 text-center font-bold text-[22px]">Login</h2>
+        <h2 className="mb-6 text-center text-white font-BebasNune font-bold text-[2rem]">Login</h2>
+        <div className="mb-[5%] ">
         <Formik
+        
           initialValues={{ name: "", password: "" }}
           validationSchema={validationSchema}  // Apply validation schema
           onSubmit={(values, { setSubmitting }) => {
@@ -44,7 +46,7 @@ const Login = () => {
                 autoClose: 2000,  // Automatically close after 2 seconds
               });
               setTimeout(() => {
-                navigate("/movies");  // Redirect to /movies after login success
+                navigate("/MovieList");  // Redirect to /movies after login success
               }, 2000);  // Redirect after 2 seconds
             } else {
               toast.error("Invalid Credentials", {
@@ -57,7 +59,8 @@ const Login = () => {
           }}
         >
           {({ isSubmitting }) => (
-            <Form className="flex flex-col gap-6">
+
+            <Form className="flex flex-col  gap-6">
               <Field
                 type="text"
                 name="name"
@@ -79,16 +82,17 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="border text-white bg-[#CB1517] p-4 border-[#CB1517] rounded-md"
+                className="border text-white bg-[#CB1517]  p-4 border-[#CB1517] rounded-md"
               >
                 Login
               </button>
             </Form>
           )}
         </Formik>
-
-        {/* Add the ToastContainer to render toasts */}
+        </div>
+        
         <ToastContainer />
+        <h1 className="text-[18px] font-PoppinsBoldItalic text-center text-white ">Need a new account? <a href="/SignIn" className="underline font-BebasNune">Sign In</a></h1>
       </div>
     </div>
   );

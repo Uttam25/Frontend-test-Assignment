@@ -83,19 +83,12 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-[100vw]">
-      <div className="my-4">
-        {/* Tab Links */}
-        <button onClick={() => setActiveTab("signup")} className="mr-4">
-          Signup Form
-        </button>
-        <button onClick={() => setActiveTab("users")}>Registered Users</button>
-      </div>
+    <div className="flex flex-col h-[100vh]  justify-center items-center w-[100vw]">
 
       {/* Signup Form */}
       {activeTab === "signup" && (
         <div className="flex flex-col">
-          <h2 className="mb-8 text-center font-bold text-[22px]">Signup</h2>
+          <h2 className="mb-8 text-center  text-[2rem] font-BebasNune font-bold text-white">Signup</h2>
           <div className="flex flex-row mb-8 justify-center">
             <Formik
               initialValues={{
@@ -198,7 +191,7 @@ const Signup: React.FC = () => {
                     type="text"
                     name="name"
                     placeholder="Name"
-                    className="border px-4 w-[22rem] border-black py-2 rounded-md"
+                    className="border px-4 w-[22rem] border-black pb-2 rounded-md"
                   />
                   <ErrorMessage name="name" component="div" className="text-red-500" />
 
@@ -206,7 +199,7 @@ const Signup: React.FC = () => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className="border  px-4  w-[22rem] border-black py-2 rounded-md"
+                    className="border  px-4  w-[22rem] border-black pb-2 rounded-md"
                   />
                   <ErrorMessage name="email" component="div" className="text-red-500" />
 
@@ -214,16 +207,16 @@ const Signup: React.FC = () => {
                     type="text"
                     name="phone"
                     placeholder="Phone Number"
-                    className="border  px-4  w-[22rem] border-black py-2 rounded-md"
+                    className="border  px-4  w-[22rem] border-black pb-2 rounded-md"
                   />
                   <ErrorMessage name="phone" component="div" className="text-red-500" />
 
                   <Field
                     as="select"
                     name="profession"
-                    className="border w-[22rem]  px-4  border-black py-2 rounded-md"
+                    className="border w-[22rem]  px-4  border-black pb-2 rounded-md"
                   >
-                    <option value="" disabled>
+                    <option value="" className="" disabled>
                       Select
                     </option>
                     <option value="developer">Developer</option>
@@ -237,7 +230,7 @@ const Signup: React.FC = () => {
                     type="password"
                     name="password"
                     placeholder="Password"
-                    className="border px-4 w-[22rem] border-black py-2 rounded-md"
+                    className="border px-4 w-[22rem] border-black pb-2 rounded-md"
                   />
                   <ErrorMessage name="password" component="div" className="text-red-500" />
 
@@ -266,7 +259,7 @@ const Signup: React.FC = () => {
 
       {/* Toast Notifications */}
       <ToastContainer />
-      <h1 className="text-[18px] ">Already Registered? please <a href="/login" className="text-[18px] text-italic underline">Login</a></h1>
+      <h1 className="text-[18px] font-PoppinsBlackItalic text-white ">Already Registered? please <a href="/login" className="text-[18px] font-BebasNune underline">Login</a></h1>
     </div>
   );
 };
