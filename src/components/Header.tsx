@@ -9,7 +9,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex h-[12%] bg-[#343434] w-[100vw] px-[6%] items-center sm:relative lg:absolute top-0 left-0 z-50 flex-row sm:gap-0 lg:gap-8 justify-between ">
+    <header className="flex h-[12%] bg-[#343434] w-[100vw] px-[6%] items-center absolute top-0 left-0 z-50 flex-row sm:gap-0 lg:gap-8 justify-between ">
       <Link to="/" aria-label="Homepage">
         <img
           src="/icons/squadraLogo.png"

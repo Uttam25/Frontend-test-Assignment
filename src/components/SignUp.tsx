@@ -33,7 +33,7 @@ const Signup: React.FC = () => {
   }, [storedData]);
 
   return (
-    <div className="flex flex-col h-full justify-center items-center w-full">
+    <div className="flex flex-col h-[100vh] justify-center items-center w-[100vw]">
       {/* Signup Form */}
       {activeTab === "signup" && (
         <div className="flex flex-col w-full">
@@ -61,7 +61,7 @@ const Signup: React.FC = () => {
                     type="text"
                     name="name"
                     placeholder="Name"
-                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
+                    className="border px-4 w-[70%] md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
                   />
                   <ErrorMessage
                     name="name"
@@ -73,7 +73,7 @@ const Signup: React.FC = () => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
+                    className="border px-4 w-[70%] md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
                   />
                   <ErrorMessage
                     name="email"
@@ -85,7 +85,7 @@ const Signup: React.FC = () => {
                     type="text"
                     name="phone"
                     placeholder="Phone Number"
-                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
+                    className="border px-4 w-[70%] md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
                   />
                   <ErrorMessage
                     name="phone"
@@ -96,7 +96,7 @@ const Signup: React.FC = () => {
                   <Field
                     as="select"
                     name="profession"
-                    className="border w-full md:w-[75%] lg:w-[30%] px-4 border-black py-2 rounded-md"
+                    className="border w-[70%] md:w-[75%] lg:w-[30%] px-4 border-black py-2 rounded-md"
                   >
                     <option value="" disabled>
                       Select
@@ -116,7 +116,7 @@ const Signup: React.FC = () => {
                     type="password"
                     name="password"
                     placeholder="Password"
-                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
+                    className="border px-4 w-[70%] md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
                   />
                   <ErrorMessage
                     name="password"
@@ -127,7 +127,7 @@ const Signup: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="border text-white w-[75%] md:w-[50%] lg:w-[20%] bg-[#CB1517] p-4 border-[#CB1517] rounded-md"
+                    className="border text-white w-[40%] md:w-[50%] lg:w-[20%] bg-[#CB1517] p-2 border-[#CB1517] rounded-md"
                   >
                     Signup
                   </button>
