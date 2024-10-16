@@ -1,95 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RegisteredUsers from "./RegisteredUsers"; // Import the RegisteredUsers component
-
-// Define the type for a single User
-type User = {
-  name: string;
-  email: string;
-  phone: string;
-  profession: string;
-  password: string;
-};
-
-// Define Yup validation schema
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .matches(/^[a-zA-Z\s]+$/, "Name should not contain special characters or numbers")
-    .min(3, "Name must be at least 3 characters long")
-    .required("Name is required"),
-  email: Yup.string()
-    .matches(/^[a-zA-Z0-9@.]+$/, "Email can only contain letters, numbers, '@', and '.'")
-    .email("Invalid email format")
-    .required("Email is required"),
-  phone: Yup.string()
-    .matches(/^[0-9]+$/, "Phone number must contain only digits")
-    .min(10, "Phone number must be at least 10 digits")
-    .max(15, "Phone number can't be longer than 15 digits")
-    .required("Phone number is required"),
-  profession: Yup.string()
-    .oneOf(["developer", "designer", "manager", "hr"], "Profession is required")
-    .required("Profession is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters long")
-    .required("Password is required"),
-});
+import {
+  User,
+  validationSchema,
+  loadStoredData,
+  saveStoredData,
+  handleSignupSubmit,
+  handleUserUpdate,
+} from "@/utils/user"; // Import utilities
+import { useNavigate } from "react-router-dom";
 
 const Signup: React.FC = () => {
+  const navigate = useNavigate();
   const [storedData, setStoredData] = useState<User[]>([]);
-  const [selectedUser, setSelectedUser] = useState<User & { index: number } | null>(
-    null
-  );
+  const [selectedUser, setSelectedUser] = useState<
+    (User & { index: number }) | null
+  >(null);
   const [activeTab, setActiveTab] = useState<string>("signup");
 
   // Load data from LocalStorage on component mount
   useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("storedData") || "[]");
+    const savedData = loadStoredData();
     setStoredData(savedData);
   }, []);
 
   // Save data to LocalStorage when storedData changes
   useEffect(() => {
-    localStorage.setItem("storedData", JSON.stringify(storedData));
+    saveStoredData(storedData);
   }, [storedData]);
 
-  // Handle Delete user
-  const deleteUser = (index: number) => {
-    const updatedData = storedData.filter((_, i) => i !== index);
-    setStoredData(updatedData);
-  };
-
-  // Handle Edit user
-  const editUser = (index: number) => {
-    setSelectedUser({ ...storedData[index], index });
-    setActiveTab("edit");
-  };
-
-  // Handle Update user
-  const updateUser = (values: User) => {
-    const updatedData = [...storedData];
-    if (selectedUser) {
-      updatedData[selectedUser.index] = values;
-      setStoredData(updatedData);
-      setSelectedUser(null);
-      setActiveTab("users");
-      toast.success("User updated successfully", {
-        position: "top-center",
-        autoClose: 2000,
-      });
-    }
-  };
-
   return (
-    <div className="flex flex-col h-[100vh]  justify-center items-center w-[100vw]">
-
+    <div className="flex flex-col h-full justify-center items-center w-full">
       {/* Signup Form */}
       {activeTab === "signup" && (
-        <div className="flex flex-col">
-          <h2 className="mb-8 text-center  text-[2rem] font-BebasNune font-bold text-white">Signup</h2>
-          <div className="flex flex-row mb-8 justify-center">
+        <div className="flex flex-col w-full">
+          <h2 className="mb-8 text-center text-[2rem] font-BebasNune font-bold text-white">
+            Signup
+          </h2>
+          <div className="flex justify-center mb-8">
             <Formik
               initialValues={{
                 name: "",
@@ -100,45 +51,52 @@ const Signup: React.FC = () => {
               }}
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
-                setStoredData((prevData) => [...prevData, values]);
-                toast.success("Signup Successful", {
-                  position: "top-center",
-                  autoClose: 2000,
-                });
-                resetForm();
+                handleSignupSubmit(values, navigate, setStoredData, resetForm);
                 setSubmitting(false);
               }}
             >
               {({ isSubmitting }) => (
-                <Form className="flex flex-col gap-6">
+                <Form className="flex w-full justify-center items-center flex-col gap-6">
                   <Field
                     type="text"
                     name="name"
                     placeholder="Name"
-                    className="border px-4 w-[22rem] border-black py-2 rounded-md"
+                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
                   />
-                  <ErrorMessage name="name" component="div" className="text-red-500" />
+                  <ErrorMessage
+                    name="name"
+                    component="div"
+                    className="text-red-500"
+                  />
 
                   <Field
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className="border  px-4  w-[22rem] border-black py-2 rounded-md"
+                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
                   />
-                  <ErrorMessage name="email" component="div" className="text-red-500" />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="text-red-500"
+                  />
 
                   <Field
                     type="text"
                     name="phone"
                     placeholder="Phone Number"
-                    className="border  px-4  w-[22rem] border-black py-2 rounded-md"
+                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
                   />
-                  <ErrorMessage name="phone" component="div" className="text-red-500" />
+                  <ErrorMessage
+                    name="phone"
+                    component="div"
+                    className="text-red-500"
+                  />
 
                   <Field
                     as="select"
                     name="profession"
-                    className="border w-[22rem]  px-4  border-black py-2 rounded-md"
+                    className="border w-full md:w-[75%] lg:w-[30%] px-4 border-black py-2 rounded-md"
                   >
                     <option value="" disabled>
                       Select
@@ -148,20 +106,28 @@ const Signup: React.FC = () => {
                     <option value="manager">Manager</option>
                     <option value="hr">HR</option>
                   </Field>
-                  <ErrorMessage name="profession" component="div" className="text-red-500" />
+                  <ErrorMessage
+                    name="profession"
+                    component="div"
+                    className="text-red-500"
+                  />
 
                   <Field
                     type="password"
                     name="password"
                     placeholder="Password"
-                    className="border px-4 w-[22rem] border-black py-2 rounded-md"
+                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black py-2 rounded-md"
                   />
-                  <ErrorMessage name="password" component="div" className="text-red-500" />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-red-500"
+                  />
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="border text-white cursor bg-[#CB1517] p-4 border-[#CB1517] rounded-md"
+                    className="border text-white w-[75%] md:w-[50%] lg:w-[20%] bg-[#CB1517] p-4 border-[#CB1517] rounded-md"
                   >
                     Signup
                   </button>
@@ -174,47 +140,67 @@ const Signup: React.FC = () => {
 
       {/* Edit User Form */}
       {activeTab === "edit" && selectedUser && (
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <h2 className="mb-8 text-center font-bold text-[22px]">Edit User</h2>
-          <div className="flex flex-row mb-8 justify-center">
+          <div className="flex justify-center mb-8">
             <Formik
               initialValues={selectedUser}
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting }) => {
-                updateUser(values);
+                handleUserUpdate(
+                  values,
+                  storedData,
+                  selectedUser,
+                  setStoredData,
+                  //@ts-ignore
+                  setSelectedUser,
+                  setActiveTab
+                );
                 setSubmitting(false);
               }}
             >
               {({ isSubmitting }) => (
-                <Form className="flex flex-col gap-6">
+                <Form className="flex flex-col gap-6 w-full">
                   <Field
                     type="text"
                     name="name"
                     placeholder="Name"
-                    className="border px-4 w-[22rem] border-black pb-2 rounded-md"
+                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black pb-2 rounded-md"
                   />
-                  <ErrorMessage name="name" component="div" className="text-red-500" />
+                  <ErrorMessage
+                    name="name"
+                    component="div"
+                    className="text-red-500"
+                  />
 
                   <Field
                     type="email"
                     name="email"
                     placeholder="Email"
-                    className="border  px-4  w-[22rem] border-black pb-2 rounded-md"
+                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black pb-2 rounded-md"
                   />
-                  <ErrorMessage name="email" component="div" className="text-red-500" />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="text-red-500"
+                  />
 
                   <Field
                     type="text"
                     name="phone"
                     placeholder="Phone Number"
-                    className="border  px-4  w-[22rem] border-black pb-2 rounded-md"
+                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black pb-2 rounded-md"
                   />
-                  <ErrorMessage name="phone" component="div" className="text-red-500" />
+                  <ErrorMessage
+                    name="phone"
+                    component="div"
+                    className="text-red-500"
+                  />
 
                   <Field
                     as="select"
                     name="profession"
-                    className="border w-[22rem]  px-4  border-black pb-2 rounded-md"
+                    className="border w-full md:w-[75%] lg:w-[30%] sm:px-2 px-4 border-black sm:py-0 py-2 rounded-md"
                   >
                     <option value="" className="" disabled>
                       Select
@@ -224,20 +210,28 @@ const Signup: React.FC = () => {
                     <option value="manager">Manager</option>
                     <option value="hr">HR</option>
                   </Field>
-                  <ErrorMessage name="profession" component="div" className="text-red-500" />
+                  <ErrorMessage
+                    name="profession"
+                    component="div"
+                    className="text-red-500"
+                  />
 
                   <Field
                     type="password"
                     name="password"
                     placeholder="Password"
-                    className="border px-4 w-[22rem] border-black pb-2 rounded-md"
+                    className="border px-4 w-full md:w-[75%] lg:w-[30%] border-black pb-2 rounded-md"
                   />
-                  <ErrorMessage name="password" component="div" className="text-red-500" />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-red-500"
+                  />
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="border text-white cursor bg-[#CB1517] p-4 border-[#CB1517] rounded-md"
+                    className="border w-[75%] lg:w-[30%] text-white bg-[#CB1517] p-4 border-[#CB1517] rounded-md"
                   >
                     Update
                   </button>
@@ -249,17 +243,16 @@ const Signup: React.FC = () => {
       )}
 
       {/* Registered Users Tab */}
-      {activeTab === "users" && (
-        <RegisteredUsers
-          users={storedData}
-          deleteUser={deleteUser}
-          editUser={editUser}
-        />
-      )}
+      {activeTab === "users" && <RegisteredUsers />}
 
       {/* Toast Notifications */}
       <ToastContainer />
-      <h1 className="text-[18px] font-PoppinsBlackItalic text-white ">Already Registered? please <a href="/login" className="text-[18px] font-BebasNune underline">Login</a></h1>
+      <h1 className="text-[18px] font-PoppinsBoldItalic text-white">
+        Already Registered? Please{" "}
+        <a href="/login" className="text-[18px] font-BebasNune underline">
+          Login
+        </a>
+      </h1>
     </div>
   );
 };

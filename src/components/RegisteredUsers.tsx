@@ -1,47 +1,19 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Header from "./Header";
+import { getUsersList, handleDeleteUser, handleEditUser } from "@/utils/user";
 
-// Define the User type
-type User = {
-  name: string;
-  email: string;
-  phone: string;
-  profession: string;
-};
-
-type RegisteredUsersProps = {
-  users: User[];
-  deleteUser: (index: number) => void;
-  editUser: (index: number) => void;
-};
-
-const RegisteredUsers: React.FC<RegisteredUsersProps> = ({
-  users,
-  deleteUser,
-  editUser,
+const RegisteredUsers: React.FC = ({
 }) => {
-  
-  const handleDeleteUser = useCallback(
-    (index: number) => {
-      deleteUser(index);
-    },
-    [deleteUser]
-  );
-
-  const handleEditUser = useCallback(
-    (index: number) => {
-      editUser(index);
-    },
-    [editUser]
-  );
+const users = getUsersList()
+console.log("users",users)
 
   return (
-    <div className="flex flex-col justify-start h-[100vh] items-center w-[100vw]">
-      {/* Header */}
+    <div className="flex  bg-black flex-col  lg:w-[100vw] sm:w-[full] lg:flex-col sm:justify-center lg:justify-start h-[100vh] items-center ">
+      {/* Header */} 
       <Header />
 
-      <div className="mt-[10%]">
-        <h2 className="text-[2rem] mt-8 font-BebasNune text-white font-bold">
+      <div className="mt-[10%] ">
+        <h2 className="text-[2rem] mt-8 font-BebasNune text-center text-white font-bold">
           Registered Users
         </h2>
 
@@ -50,8 +22,8 @@ const RegisteredUsers: React.FC<RegisteredUsersProps> = ({
             No users registered yet.
           </p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="table-auto border-collapse border border-gray-300 mt-4 w-full">
+          <div className="overflow-x-auto  ">
+            <table className="table-auto border-collapse text-white border border-gray-300 mt-4 w-full">
               <thead>
                 <tr>
                   <th className="border px-4 py-2">Name</th>
@@ -61,16 +33,16 @@ const RegisteredUsers: React.FC<RegisteredUsersProps> = ({
                   <th className="border px-4 py-2">Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="overflow-x-auto">
                 {users.map((user, index) => (
-                  <tr key={index} className="hover:bg-gray-100">
+                  <tr key={index} className=" text-white">
                     <td className="border px-4 py-2">{user.name}</td>
                     <td className="border px-4 py-2">{user.email}</td>
                     <td className="border px-4 py-2">{user.phone}</td>
                     <td className="border px-4 py-2">{user.profession}</td>
                     <td className="border px-4 py-2 flex flex-row gap-4 justify-center">
                       <button
-                        onClick={() => handleEditUser(index)}
+                        onClick={() => handleEditUser( user,index)}
                         className="text-blue-500 hover:text-blue-700"
                       >
                         Edit

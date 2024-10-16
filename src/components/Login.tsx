@@ -1,104 +1,61 @@
+import { handleSubmit,  loginSchema } from "@/utils/user";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import * as Yup from "yup";  // Import Yup for validation
+import {  ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const validCredentials = [
-  { name: "testuser", password: "testpassword"},
-  { name: "admin", password: "admin123" },
-  { name: "guest", password: "guestpass"},
-  { name: "user1", password: "password1" },
-  { name: "user2", password: "password2" },
-];
-
-// Define the validation schema using Yup
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  
-  password: Yup.string().required("Password is required"),
-});
-
 const Login = () => {
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
   return (
     <div className="flex w-[100vw] h-[100vh] justify-center items-center">
       <div className="flex flex-col justify-center">
         <h2 className="mb-6 text-center text-white font-BebasNune font-bold text-[2rem]">Login</h2>
-        <div className="mb-[5%] ">
-        <Formik
-        
-          initialValues={{ name: "", password: "" }}
-          validationSchema={validationSchema}  // Apply validation schema
-          onSubmit={(values, { setSubmitting }) => {
-            // Find the user in the validCredentials array
-            const user = validCredentials.find(
-              (cred) =>
-                cred.name === values.name &&
-                
-                cred.password === values.password
-            );
+        <div className="mb-[3%]">
+          <Formik
+            initialValues={{ name: "", password: "" }} // Make sure these values match validation schema
+            validationSchema={loginSchema} // Apply validation schema from utils
+            onSubmit={(values, { setSubmitting }) => {
+              console.log("Form Submitted:", values); // Log form submission
+              handleSubmit(values, navigate, setSubmitting); // Use the handleSubmit from utils
+            }}
+          >
+            {({ isSubmitting }) => (
+              <Form className="flex flex-col justify-center items-center w-[100vw] gap-6">
+                <Field
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  className="border w-[70%] lg:w-[30%] border-black p-2 rounded-md "
+                />
+                <ErrorMessage name="name" component="div" className="text-red-500" /> {/* Show name error */}
 
-            if (user) {
-              toast.success("Login Successful", {
-                position: "top-center",
-                autoClose: 2000,  // Automatically close after 2 seconds
-              });
-              setTimeout(() => {
-                navigate("/MovieList");  // Redirect to /movies after login success
-              }, 2000);  // Redirect after 2 seconds
-            } else {
-              toast.error("Invalid Credentials", {
-                position: "top-center",
-                autoClose: 2000,  // Automatically close after 2 seconds
-              });
-            }
+                <Field
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  className="border w-[70%] lg:w-[30%] border-black p-2 rounded-md "
+                />
+                <ErrorMessage name="password" component="div" className="text-red-500" /> {/* Show password error */}
 
-            setSubmitting(false);  // Stop the submission state
-          }}
-        >
-          {({ isSubmitting }) => (
-
-            <Form className="flex flex-col  gap-6">
-              <Field
-                type="text"
-                name="name"
-                placeholder="Name"
-                className="border w-[22rem] border-black p-2 rounded-md"
-              />
-              <ErrorMessage name="name" component="div" className="text-red-500" /> {/* Show name error */}
-              
-              
-
-              <Field
-                type="password"
-                name="password"
-                placeholder="Password"
-                className="border w-[22rem] border-black p-2 rounded-md"
-              />
-              <ErrorMessage name="password" component="div" className="text-red-500" /> {/* Show password error */}
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="border text-white bg-[#CB1517]  p-4 border-[#CB1517] rounded-md"
-              >
-                Login
-              </button>
-            </Form>
-          )}
-        </Formik>
+                <button
+                  type="submit"
+                  disabled={isSubmitting} // Disable button during submission
+                  className="border w-[70%] lg:w-[30%] text-white bg-[#CB1517] p-4 border-[#CB1517] rounded-md"
+                >
+                  Login
+                </button>
+              </Form>
+            )}
+          </Formik>
         </div>
-        
+
         <ToastContainer />
-        <h1 className="text-[18px] font-PoppinsBoldItalic text-center text-white ">Need a new account? <a href="/SignIn" className="underline font-BebasNune">Sign In</a></h1>
+        <h1 className="text-[18px] font-PoppinsBoldItalic text-center text-white">
+          Need a new account? <a href="/SignIn" className="underline font-BebasNune">Sign In</a>
+        </h1>
       </div>
     </div>
   );
 };
 
 export default Login;
-
-
-  
