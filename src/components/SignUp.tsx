@@ -15,22 +15,22 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
-  const [storedData, setStoredData] = useState<User[]>([]);
+//   const [storedData, setStoredData] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<
     (User & { index: number }) | null
   >(null);
   const [activeTab, setActiveTab] = useState<string>("signup");
 
   // Load data from LocalStorage on component mount
-  useEffect(() => {
-    const savedData = loadStoredData();
-    setStoredData(savedData);
-  }, []);
+//   useEffect(() => {
+    // const savedData = loadStoredData();
+    // setStoredData(savedData);
+//   }, []);
 
   // Save data to LocalStorage when storedData changes
-  useEffect(() => {
-    saveStoredData(storedData);
-  }, [storedData]);
+//   useEffect(() => {
+//     saveStoredData(storedData);
+//   }, [storedData]);
 
   return (
     <div className="flex flex-col h-[100vh] justify-center items-center w-[100vw]">
@@ -51,7 +51,7 @@ const Signup: React.FC = () => {
               }}
               validationSchema={validationSchema}
               onSubmit={(values, { setSubmitting, resetForm }) => {
-                handleSignupSubmit(values, navigate, setStoredData, resetForm);
+                handleSignupSubmit(values, navigate, resetForm);
                 setSubmitting(false);
               }}
             >
@@ -149,9 +149,9 @@ const Signup: React.FC = () => {
               onSubmit={(values, { setSubmitting }) => {
                 handleUserUpdate(
                   values,
-                  storedData,
+                //   storedData,
                   selectedUser,
-                  setStoredData,
+                //   setStoredData,
                   //@ts-ignore
                   setSelectedUser,
                   setActiveTab

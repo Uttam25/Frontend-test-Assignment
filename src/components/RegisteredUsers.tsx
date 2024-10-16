@@ -9,8 +9,10 @@ console.log("users",users)
 
   return (
     <div className="flex  bg-black flex-col  lg:w-[100vw] sm:w-[full] lg:flex-col sm:justify-center lg:justify-start h-[100vh] items-center ">
-      {/* Header */} 
+      {/* Header */}
+      <div className="hidden lg:block ">
       <Header />
+      </div> 
 
       <div className="mt-[10%] ">
         <h2 className="text-[2rem] mt-8 font-BebasNune text-center text-white font-bold">
@@ -42,7 +44,7 @@ console.log("users",users)
                     <td className="border px-4 py-2">{user.profession}</td>
                     <td className="border px-4 py-2 flex flex-row gap-4 justify-center">
                       <button
-                        onClick={() => handleEditUser( user,index)}
+                        onClick={() => handleEditUser(user,index)}
                         className="text-blue-500 hover:text-blue-700"
                       >
                         Edit

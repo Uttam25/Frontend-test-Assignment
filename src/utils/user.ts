@@ -17,44 +17,49 @@ export const loginSchema = Yup.object().shape({
     .max(20, "Password can't be longer than 20 characters"),
 });
 export const handleSubmit = (
-    values: { name: string; password: string },
-    navigate: ReturnType<typeof useNavigate>,
-    setSubmitting: (isSubmitting: boolean) => void
-  ) => {
-    console.log("Submit handler invoked with values:", values); // Add a log here to check if it's triggered
+  values: { name: string; password: string },
+  navigate: ReturnType<typeof useNavigate>,
+  setSubmitting: (isSubmitting: boolean) => void
+) => {
+  console.log("Submit handler invoked with values:", values); // Add a log here to check if it's triggered
 
-    // Find the user in the validCredentials array
-    const user = validCredentials.find(
-      (cred: { name: string; password: string }) =>
-        cred.name === values.name && cred.password === values.password
-    );
+  // Find the user in the validCredentials array
+  const user = validCredentials.find(
+    (cred: { name: string; password: string }) =>
+      cred.name === values.name && cred.password === values.password
+  );
 
-    if (user) {
-      toast.success("Login Successful", {
-        position: "top-center",
-        autoClose: 2000, // Automatically close after 2 seconds
-      });
-      setTimeout(() => {
-        navigate("/MovieList"); // Redirect to /movies after login success
-      }, 2000); // Redirect after 2 seconds
-    } else {
-      toast.error("Invalid Credentials", {
-        position: "top-center",
-        autoClose: 2000, // Automatically close after 2 seconds
-      });
-    }
+  if (user) {
+    toast.success("Login Successful", {
+      position: "top-center",
+      autoClose: 2000, // Automatically close after 2 seconds
+    });
+    setTimeout(() => {
+      navigate("/MovieList"); // Redirect to /movies after login success
+    }, 2000); // Redirect after 2 seconds
+  } else {
+    toast.error("Invalid Credentials", {
+      position: "top-center",
+      autoClose: 2000, // Automatically close after 2 seconds
+    });
+  }
 
-    setSubmitting(false); // Stop the submission state
-  };
-
+  setSubmitting(false); // Stop the submission state
+};
 
 export const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .matches(/^[a-zA-Z\s]+$/, "Name should not contain special characters or numbers")
+    .matches(
+      /^[a-zA-Z\s]+$/,
+      "Name should not contain special characters or numbers"
+    )
     .min(3, "Name must be at least 3 characters long")
     .required("Name is required"),
   email: Yup.string()
-    .matches(/^[a-zA-Z0-9@.]+$/, "Email can only contain letters, numbers, '@', and '.'")
+    .matches(
+      /^[a-zA-Z0-9@.]+$/,
+      "Email can only contain letters, numbers, '@', and '.'"
+    )
     .email("Invalid email format")
     .required("Email is required"),
   phone: Yup.string()
@@ -82,57 +87,70 @@ export const validationSchema = Yup.object().shape({
 
 // Handle adding new user
 export const saveStoredData = (storedData: User[]) => {
-    localStorage.setItem("usersList", JSON.stringify(storedData));
-  };
-  
-  // Load data from LocalStorage
-  export const loadStoredData = (): User[] => {
-    const savedData = localStorage.getItem("usersList");
-    return savedData ? JSON.parse(savedData) : [];
-  };
-  
-  // Handle adding new user (Signup)
-  export const handleSignupSubmit = (
-values: User, navigate: ReturnType<typeof useNavigate>, setStoredData: React.Dispatch<React.SetStateAction<User[]>>, resetForm: () => void  ) => {
-    const existingUsers = loadStoredData(); // Load existing users from localStorage
-    const updatedUsers = [...existingUsers, values]; // Add the new user to the list
-  
-    // Save the updated list of users to localStorage
-    saveStoredData(updatedUsers);
-  
-    // Update the app state with the new user list
-    setStoredData(updatedUsers);
-  
-    // Show success message
-    toast.success("Signup Successful", {
-      position: "top-center",
-      autoClose: 2000,
-    });
-    setTimeout(() => {
-        navigate("/login"); // Redirect to /movies after login success
-      }, 2000);
-    // Reset the form after submission
-    resetForm();
-  };
-  
-  // Function to get the list of users from localStorage
-  export const getUsersList = (): User[] => {
-    return loadStoredData(); // Load users from local storage
-  };
+  localStorage.setItem("usersList", JSON.stringify(storedData));
+};
+
+// Load data from LocalStorage
+export const loadStoredData = (): User[] => {
+  const savedData = localStorage.getItem("usersList");
+  console.log("savedData",savedData);
+  return savedData ? JSON.parse(savedData) : [];
+};
+
+// Handle adding new user (Signup)
+export const handleSignupSubmit = (
+  values: User,
+  navigate: ReturnType<typeof useNavigate>,
+//   setStoredData: React.Dispatch<React.SetStateAction<User[]>>,
+  resetForm: () => void
+) => {
+  const existingUsers = getUsersList(); // Load existing users from localStorage
+  console.log("existingUsers", existingUsers);
+  const updatedUsers = [...existingUsers, values]; // Add the new user to the list
+
+  // Save the updated list of users to localStorage
+  saveStoredData(updatedUsers);
+
+  // Update the app state with the new user list
+//   setStoredData(updatedUsers);
+
+  // Show success message
+  toast.success("Signup Successful", {
+    position: "top-center",
+    autoClose: 2000,
+  });
+  setTimeout(() => {
+    navigate("/login"); // Redirect to /movies after login success
+  }, 2000);
+  // Reset the form after submission
+  resetForm();
+};
+
+// Function to get the list of users from localStorage
+export const getUsersList = (): User[] => {
+  return loadStoredData(); // Load users from local storage
+};
 
 // Handle user update
 export const handleUserUpdate = (
   values: User,
-  storedData: User[],
+//   storedData: User[],
   selectedUser: { index: number } | null,
-  setStoredData: React.Dispatch<React.SetStateAction<User[]>>,
+//   setStoredData: React.Dispatch<React.SetStateAction<User[]>>,
   setSelectedUser: React.Dispatch<React.SetStateAction<User | null>>,
   setActiveTab: React.Dispatch<React.SetStateAction<string>>
 ) => {
-  const updatedData = [...storedData];
+  const updatedData = getUsersList();
   if (selectedUser) {
     updatedData[selectedUser.index] = values;
-    setStoredData(updatedData);
+    // setStoredData(updatedData);
+    saveStoredData(updatedData);
+    // setSelectedUser(null);
+    // setActiveTab("users");
+    // toast.success("User updated successfully", {
+    //   position: "top-center",
+    //   autoClose: 2000,
+    // });
     setSelectedUser(null);
     setActiveTab("users");
     toast.success("User updated successfully", {
@@ -143,49 +161,57 @@ export const handleUserUpdate = (
 };
 
 export const handleEditUser = (
-    updatedUser: User,
-    index: number,
-    // storedData: User[],
-    // setStoredData: React.Dispatch<React.SetStateAction<User[]>>,
-    // resetForm: () => void
-  ) => {
-    // Update the user in the stored data
+  updatedUser: User,
+  index: number
+  // storedData: User[],
+  // setStoredData: React.Dispatch<React.SetStateAction<User[]>>,
+  // resetForm: () => void
+) => {
+  // Update the user in the stored data
 
-    const storedData = getUsersList()
-    const updatedUsers = [...storedData];
-    updatedUsers[index] = updatedUser; // Replace the user at the specified index with the updated user
-    
-    // Save the updated data to localStorage
-    saveStoredData(updatedUsers);
-  
-    // Update the state
-    // setStoredData(updatedUsers);
-  
-    // Show success toast
-    toast.success("User updated successfully!", {
-      position: "top-center",
-      autoClose: 2000,
-    });
-  
-    // Reset the form after updating
-    // resetForm();
-  };
-  
-  // **Handle Deleting a User**
-  export const handleDeleteUser = (
-index: number, 
+  const storedData = getUsersList();
+  const updatedUsers = [...storedData];
+  updatedUsers[index] = updatedUser; // Replace the user at the specified index with the updated user
+
+  // Save the updated data to localStorage
+  saveStoredData(updatedUsers);
+
+  // Update the state
+  // setStoredData(updatedUsers);
+
+  // Show success toast
+  toast.success("User updated successfully!", {
+    position: "top-center",
+    autoClose: 2000,
+  });
+
+  // Reset the form after updating
+  // resetForm();
+};
+
+// **Handle Deleting a User**
+export const handleDeleteUser = (
+    index: number,
     // storedData: User[],
     // setStoredData: React.Dispatch<React.SetStateAction<User[]>>
   ) => {
+    // Check if index is within valid range
+    const storedData = getUsersList();
+    if (index < 0 || index >= storedData?.length) {
+      toast.error("Invalid user index!", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+      return;
+    }
+  
     // Remove the user from the stored data
-
-    const storedData = getUsersList()
     const updatedUsers = storedData.filter((_, i) => i !== index);
   
     // Save the updated data to localStorage
     saveStoredData(updatedUsers);
   
-    // Update the state
+    // Update the state with the new users list
     // setStoredData(updatedUsers);
   
     // Show success toast
@@ -194,57 +220,55 @@ index: number,
       autoClose: 2000,
     });
   };
+  
 
 type EditDeleteCallback = (index: number) => void;
 export type User = {
-    name: string;
-    email: string;
-    phone: string;
-    profession: string;
-    password?: string; 
-  };
-  
+  name: string;
+  email: string;
+  phone: string;
+  profession: string;
+  password?: string;
+};
 
-  export const addUser = (
-    users: User[],
-    setUsers: React.Dispatch<React.SetStateAction<User[]>>,
-    editIndex: number | null,
-    user: User,
-    setEditIndex: React.Dispatch<React.SetStateAction<number | null>>,
-    setUserToEdit: React.Dispatch<React.SetStateAction<User | null>>
-  ) => {
-    if (editIndex !== null) {
-     
-      const updatedUsers = users.map((u, index) => (index === editIndex ? user : u));
-      setUsers(updatedUsers);
-      setEditIndex(null);
-      setUserToEdit(null); 
-    } else {
-     
-      setUsers((prevUsers) => [...prevUsers, user]);
-    }
-  };
-  
-  
-  export const deleteUser = (
-    users: User[],
-    setUsers: React.Dispatch<React.SetStateAction<User[]>>,
-    index: number
-  ) => {
-    const updatedUsers = users.filter((_, i) => i !== index);
+export const addUser = (
+  users: User[],
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>,
+  editIndex: number | null,
+  user: User,
+  setEditIndex: React.Dispatch<React.SetStateAction<number | null>>,
+  setUserToEdit: React.Dispatch<React.SetStateAction<User | null>>
+) => {
+  if (editIndex !== null) {
+    const updatedUsers = users.map((u, index) =>
+      index === editIndex ? user : u
+    );
     setUsers(updatedUsers);
-  };
-  
-  
-  export const editUser = (
-    users: User[],
-    setUserToEdit: React.Dispatch<React.SetStateAction<User | null>>,
-    setEditIndex: React.Dispatch<React.SetStateAction<number | null>>,
-    index: number
-  ) => {
-    setUserToEdit(users[index]);
-    setEditIndex(index); 
-  };
+    setEditIndex(null);
+    setUserToEdit(null);
+  } else {
+    setUsers((prevUsers) => [...prevUsers, user]);
+  }
+};
+
+export const deleteUser = (
+  users: User[],
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>,
+  index: number
+) => {
+  const updatedUsers = users.filter((_, i) => i !== index);
+  setUsers(updatedUsers);
+};
+
+export const editUser = (
+  users: User[],
+  setUserToEdit: React.Dispatch<React.SetStateAction<User | null>>,
+  setEditIndex: React.Dispatch<React.SetStateAction<number | null>>,
+  index: number
+) => {
+  setUserToEdit(users[index]);
+  setEditIndex(index);
+};
 
 export const useHandleDeleteUser = (deleteUser: EditDeleteCallback) => {
   return useCallback(
@@ -254,7 +278,6 @@ export const useHandleDeleteUser = (deleteUser: EditDeleteCallback) => {
     [deleteUser]
   );
 };
-
 
 export const useHandleEditUser = (editUser: EditDeleteCallback) => {
   return useCallback(
@@ -266,12 +289,9 @@ export const useHandleEditUser = (editUser: EditDeleteCallback) => {
 };
 
 export const validCredentials = [
-    { name: "testuser", password: "testpassword" },
-    { name: "admin", password: "admin123" },
-    { name: "guest", password: "guestpass" },
-    { name: "user1", password: "password1" },
-    { name: "user2", password: "password2" },
-  ];
-  
- 
-  
+  { name: "testuser", password: "testpassword" },
+  { name: "admin", password: "admin123" },
+  { name: "guest", password: "guestpass" },
+  { name: "user1", password: "password1" },
+  { name: "user2", password: "password2" },
+];
