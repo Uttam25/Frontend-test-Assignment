@@ -11,7 +11,7 @@ import {
   handleSignupSubmit,
   handleUserUpdate,
 } from "@/utils/user"; // Import utilities
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -249,9 +249,9 @@ const Signup: React.FC = () => {
       <ToastContainer />
       <h1 className="text-[18px] font-PoppinsBoldItalic text-white">
         Already Registered? Please{" "}
-        <a href="/login" className="text-[18px] font-BebasNune underline">
+        <Link to="/login" className="text-[18px] font-BebasNune underline">
           Login
-        </a>
+        </Link>
       </h1>
     </div>
   );

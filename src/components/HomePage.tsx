@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const HomePage = () => {
   return (
     <>
@@ -13,12 +15,12 @@ const HomePage = () => {
           </p>
         </div>
         <div className="flex space-x-8">
-        <a href="/login"><button className="bg-white text-black cursor font-semibold py-2 px-12 rounded hover:bg-[#CB1517]">
+        <Link to="/login"><button className="bg-white text-black cursor font-semibold py-2 px-12 rounded hover:bg-[#CB1517]">
             Login
-          </button></a>  
-          <a href="/signin"><button className="bg-white text-black cursor font-semibold py-2 px-10 rounded hover:bg-blue-600">
+          </button></Link>  
+          <Link to="/signin"><button className="bg-white text-black cursor font-semibold py-2 px-10 rounded hover:bg-blue-600">
             Signup
-          </button></a>
+          </button></Link>
         </div>
       </div>
     </>

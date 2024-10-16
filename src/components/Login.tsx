@@ -1,6 +1,6 @@
 import { handleSubmit,  loginSchema } from "@/utils/user";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {  ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -51,7 +51,7 @@ const Login = () => {
 
         <ToastContainer />
         <h1 className="text-[18px] font-PoppinsBoldItalic text-center text-white">
-          Need a new account? <a href="/signin" className="underline font-BebasNune">Sign In</a>
+          Need a new account? <Link to="/signin" className="underline font-BebasNune">Sign In</Link>
         </h1>
       </div>
     </div>
