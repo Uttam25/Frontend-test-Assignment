@@ -51,7 +51,7 @@ const Login = () => {
 
         <ToastContainer />
         <h1 className="text-[18px] font-PoppinsBoldItalic text-center text-white">
-          Need a new account? <a href="/SignIn" className="underline font-BebasNune">Sign In</a>
+          Need a new account? <a href="/signin" className="underline font-BebasNune">Sign In</a>
         </h1>
       </div>
     </div>

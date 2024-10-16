@@ -16,7 +16,7 @@ const HomePage = () => {
         <a href="/login"><button className="bg-white text-black cursor font-semibold py-2 px-12 rounded hover:bg-[#CB1517]">
             Login
           </button></a>  
-          <a href="/SignIn"><button className="bg-white text-black cursor font-semibold py-2 px-10 rounded hover:bg-blue-600">
+          <a href="/signin"><button className="bg-white text-black cursor font-semibold py-2 px-10 rounded hover:bg-blue-600">
             Signup
           </button></a>
         </div>

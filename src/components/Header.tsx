@@ -42,7 +42,7 @@ const Header = () => {
           </p>
         </a>
 
-        <a href="/UserDetails" aria-label="Registered Users">
+        <a href="/userdetails" aria-label="Registered Users">
           <p className="text-[1.7rem] font-BebasNune text-white cursor-pointer">
             Registered Users
           </p>
@@ -80,7 +80,7 @@ const Header = () => {
           </a>
 
           <a
-            href="/UserDetails"
+            href="/userdetails"
             aria-label="Registered Users"
             className="text-[1.7rem] font-BebasNune text-white cursor-pointer"
             onClick={toggleMenu}

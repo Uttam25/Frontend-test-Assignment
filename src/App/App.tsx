@@ -16,13 +16,13 @@ const App: React.FC = () => {
           
           <Route path="/" element={<HomePage />} />
           <Route
-            path="/SignIn"
+            path="/signin"
             element={
               <Signup/>}
           />
 
           <Route
-            path="/UserDetails"
+            path="/userdetails"
             element={
               <RegisteredUsers/>
             }
