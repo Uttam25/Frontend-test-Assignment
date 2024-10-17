@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RegisteredUsers from "./RegisteredUsers";
-import { User, validationSchema, handleSignupSubmit } from "@/utils/user";
+import { validationSchema, handleSignupSubmit } from "@/utils/user";
 import { Link, useNavigate } from "react-router-dom";
 
 // Define the type for form values
@@ -17,6 +17,7 @@ interface FormValues {
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
+  //@ts-ignore
   const [activeTab, setActiveTab] = useState("signup");
 
   // Initial form values
