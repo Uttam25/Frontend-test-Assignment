@@ -24,10 +24,23 @@ const Header = () => {
         onClick={toggleMenu}
         className="lg:hidden flex flex-col items-center justify-center space-y-1"
         aria-label="Toggle Menu"
+        aria-expanded={isMenuOpen} // Accessibility improvement
       >
-        <span className="block w-8 h-1 bg-black"></span>
-        <span className="block w-8 h-1 bg-black"></span>
-        <span className="block w-8 h-1 bg-black"></span>
+        <span
+          className={`block w-8 h-1 bg-black transition-transform duration-300 ${
+            isMenuOpen ? "rotate-45 translate-y-2" : ""
+          }`}
+        ></span>
+        <span
+          className={`block w-8 h-1 bg-black transition-opacity duration-300 ${
+            isMenuOpen ? "opacity-0" : ""
+          }`}
+        ></span>
+        <span
+          className={`block w-8 h-1 bg-black transition-transform duration-300 ${
+            isMenuOpen ? "-rotate-45 -translate-y-2" : ""
+          }`}
+        ></span>
       </button>
 
       {/* Desktop navigation */}
@@ -68,7 +81,7 @@ const Header = () => {
 
       {/* Collapsible menu for small screens */}
       {isMenuOpen && (
-        <nav className="absolute top-[100%] left-0 bg-[#343434] w-full flex flex-col items-center space-y-4 z-50 py-4 lg:hidden">
+        <nav className="absolute top-[100%] left-0 bg-[#343434] w-full flex flex-col items-center space-y-4 z-50 py-4 lg:hidden transition-all duration-300">
           <Link
             to="https://squadramedia.com/"
             aria-label="Company Info"

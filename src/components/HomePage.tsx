@@ -8,7 +8,7 @@ const HomePage = () => {
             <img src="/icons/squadraLogo.png" alt="logo" className="w-auto h-auto object-contain rounded-lg" loading="lazy"/>
           
           <h2 className="text-[2rem] font-BebasNune text-white">
-            Frontend Test Assignment
+            Frontend Assignment
           </h2>
           <p className="text-[1.3rem] font-BebasNune text-white">
             Developed by: UTTAM M
