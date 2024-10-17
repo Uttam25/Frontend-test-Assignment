@@ -35,13 +35,13 @@ const RegisteredUsers: React.FC = () => {
         <Header />
       </div>
 
-      <div className="mt-[10%]">
-        <h2 className="text-[2rem] mt-8 font-BebasNune text-center text-white font-bold">
+      <div className="mt-[10%] w-[100vw]">
+        <h2 className="text-[2rem] text-center mt-8 font-BebasNune text-center text-white font-bold">
           Registered Users
         </h2>
 
         {users.length === 0 ? (
-          <p className="text-[18px] mt-8 text-white font-bold">
+          <p className="text-[18px] font-PoppinsBoldItalic text-center mt-8 text-[#989898]">
             No users registered yet.
           </p>
         ) : (
