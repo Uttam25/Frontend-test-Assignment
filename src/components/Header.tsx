@@ -56,7 +56,7 @@ const Header = () => {
           </p>
         </Link>
 
-        <Link to="/userdetails" aria-label="Registered Users">
+        <Link to="/userdetails" aria-label="Registered Users" onClick={toggleMenu}>
           <p className="text-[1.7rem] font-BebasNune text-white cursor-pointer">
             Registered Users
           </p>
