@@ -77,8 +77,8 @@ npm run test
 
 For testing purposes, use the following credentials to log into the app:
 
-- **Username:** `testuser@example.com`
-- **Password:** `password123`
+- **Username:** `admin`
+- **Password:** `admin123`
 
 Make sure to replace the login credentials with secure ones in a real-world application.
 
