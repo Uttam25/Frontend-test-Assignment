@@ -1,71 +1,95 @@
-# Eruption 🌋
 
-> Boilerplate for React/Typescript, built on top of Vite ⚡️
+# Frontend Test Assignment
 
-_It's fast! Even the tests are fast, thanks to Vite with Vitest ⚡️_
+This project is a frontend web application built using React, TypeScript, and Vite. The repository also integrates ESLint, Prettier, Husky, and Vitest for a smooth development workflow. Below you'll find the necessary steps to set up, run, and test the project.
 
-# What's in the boilerplate
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Development](#development)
+- [Build](#build)
+- [Testing](#testing)
+- [Login Credentials](#login-credentials)
+- [Contributing](#contributing)
 
-- [Vite](https://vitejs.dev/)
-- [React](https://reactjs.org/)
-- [Typescript](https://www.typescriptlang.org/)
-- [Vitest](https://vitest.dev/)
-- [Testing Library](https://testing-library.com/)
-- Dev Tools
-  - [ESLint](https://eslint.org/)
-  - [Prettier](https://prettier.io/)
-  - [CommitLint](https://commitlint.js.org/#/)
-  - [Husky](https://typicode.github.io/husky/#/)
-  - [Lint-Staged](https://github.com/okonet/lint-staged)
+## Prerequisites
+Make sure you have the following installed:
+- [Node.js](https://nodejs.org/) (version 14.x or higher)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
-# Installation
+## Installation
 
-There are two ways to install Eruption: using the template directly from GitHub (through the "Use Template" button), or using the [CLI](https://www.npmjs.com/package/create-eruption).
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Uttam25/Frontend-test-assignment.git
+   cd Frontend-test-assignment
+   ```
 
-If you want to use the CLI, run the following command on your terminal:
+2. **Install dependencies**
+   Using npm:
+   ```bash
+   npm install
+   ```
 
-```Bash
-npm init eruption@latest
+   Or using yarn:
+   ```bash
+   yarn install
+   ```
+
+## Development
+
+1. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+   This command will start a local development server. Visit `http://localhost:3000` in your browser to view the application.
+
+2. **Lint the code**
+   You can check and fix any linting errors using:
+   ```bash
+   npm run lint
+   ```
+
+3. **Formatting code**
+   Use Prettier to format the code:
+   ```bash
+   npm run format
+   ```
+
+## Build
+
+To create an optimized production build:
+```bash
+npm run build
 ```
 
-then, to start the project
+This will generate a `dist/` folder with the production files.
 
-```Bash
-cd your-project-name
-npm install
-npm run dev
+## Testing
+
+Run unit tests using Vitest:
+```bash
+npm run test
 ```
 
-## Try it online
+## Login Credentials
 
-Want to try Eruption without clone local? Try it on [StackBlitz](https://stackblitz.com/fork/github/eruptionjs/core)
+For testing purposes, use the following credentials to log into the app:
 
-# Commits
+- **Username:** `testuser@example.com`
+- **Password:** `password123`
 
-This project have commits configured to follow the Conventional Commits's best practice and it's configured with ESLint, Prettier and Stylelint.
+Make sure to replace the login credentials with secure ones in a real-world application.
 
-To commit, you must follow the convention `<type>[optional scope]: <description>`. In practice, it would be as follow:
+## Contributing
 
-```git
-git commit -m "feat: add button component"
-```
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes and commit them (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a Pull Request.
 
-Then, Husky will start the pre-commit hook and run lint-staged, who will run `prettier`, `lint` and `stylelint` to validate code format and code lint. If you fail to follow any of these validations, the commit will be aborted.
+## License
 
-After that, if everything is validated correctly, Husky will proceed with the commit-msg hook, where it will evaluate if your commit message is following the Conventional Commit's best practice and later run the tests of your project. If any of the tests are broken, the commit will be aborted. You must fix the tests before proceed.
-
-You can also commit your files with the help of the CLI. To do so, just run `npm run commit`. From there, the CLI will assist you in the proccess. As before: if your changes fails the validation, you must fix it before proceed.
-
-As a best practice, it is strongly recommended that you do not skip the validations. If you need to change the way your commit messages are written, just go to file `commitlint.config.ts` and you will find there the config needed.
-
-Check out [commitlint](https://commitlint.js.org/#/) docs to see further configurations that you can do.
-
-# Motivation
-
-Everything started because I was in need of a good, solid, reliable and fast boilerplate to work with React/Typescript projects. I was working with Create-React-App and Webpack but both of them wasn't that good at all, specially in performance. Later on I discovered that I could use Vite to replace Webpack, so here we are now. =)
-
-I believe that Eruption as it is right now, is an excellent starting point to any React/Typescript project, with enough dev tools to help you to write the best software possible and ship to production without any headaches.
-
-# License
-
-MIT
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
